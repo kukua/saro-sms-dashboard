@@ -1,2 +1,14 @@
 vendor
 upload
+composer.lock
+db_dump
+
+.env
+tools/*.log
+npm-debug.log
+
+public_html/.environment/config.php
+public_html/application/cache/
+public_html/application/logs/
+
+*.swp
