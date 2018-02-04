@@ -155,7 +155,7 @@ $contacts_email = !empty($contacts_email) ? $contacts_email[0]->counts : "0";
                                                                             <!-- Extra large text -->
                                                                             <span class="text-xlg"><strong><?php echo number_format($useraccount->credits) ?></strong></span><br>
                                                                             <!-- Big text -->
-                                                                            <span class="text-bg">SMS Balance (UGX)</span><br>
+                                                                            <span class="text-bg">SMS Balance (USD)</span><br>
                                                                         </div> <!-- /.stat-cell -->
                                                                     </div>
                                                                     <div class="stat-panel">
@@ -177,7 +177,7 @@ $contacts_email = !empty($contacts_email) ? $contacts_email[0]->counts : "0";
                                                                             <!-- Extra large text -->
                                                                             <span class="text-xlg"><strong><?php echo number_format($useraccount->email_credits) ?></strong></span><br>
                                                                             <!-- Big text -->
-                                                                            <span class="text-bg">Email Balance (UGX)</span><br>
+                                                                            <span class="text-bg">Email Balance (USD)</span><br>
                                                                         </div> <!-- /.stat-cell -->
                                                                     </div>
                                                                     <div class="stat-panel">
@@ -232,7 +232,7 @@ $contacts_email = !empty($contacts_email) ? $contacts_email[0]->counts : "0";
                                                                                     <?php echo (new Cake\I18n\Time($rows->created))->timeAgoInWords(); ?>
                                                                                 </td>
                                                                                 <td class="text-center">
-                                                                                    <?php echo number_format($rows->messages) . ' UGX'; ?>
+                                                                                    <?php echo number_format($rows->messages) . ' USD'; ?>
                                                                                 </td>
                                                                                 <td class="text-center">
                                                                                     <?php echo $rows->method; ?>

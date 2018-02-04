@@ -2,61 +2,68 @@
 <?php
 
 $sent_this_month = $this->db->select('count(*) as count, date')
-                ->from('sentitems')
-                ->where('status', 1)
-                ->where('date between "' . $start_date . '" and "' . $end_date . '"')
-                ->get()->result();
+    ->from('sentitems')
+    ->where('status', 1)
+    ->where('date between "' . $start_date . '" and "' . $end_date . '"')
+    ->get()->result();
 
 $sent_this_month_log = $this->db->select('count(*) as count, date')
-                ->from('sentitems')
-                ->where('status', 1)
-                ->where('date between "' . $start_date . '" and "' . $end_date . '"')
-                ->order_by('date', 'ASC')
-                ->group_by('date')
-                ->get()->result();
+    ->from('sentitems')
+    ->where('status', 1)
+    ->where('date between "' . $start_date . '" and "' . $end_date . '"')
+    ->order_by('date', 'ASC')
+    ->group_by('date')
+    ->get()->result();
 
 $sent_last_month = $this->db->select('count(*) as count')
-                ->from('sentitems')
-                ->where('sentitems.date between "' . $last_month_start_date . '" and "' . $last_month_end_date . '"')
-                ->get()->result();
+    ->from('sentitems')
+    ->where('sentitems.date between "' . $last_month_start_date . '" and "' . $last_month_end_date . '"')
+    ->get()->result();
 
 $sent_today = $this->db->select('count(*) as count')
-                ->from('sentitems')
-                ->where(array('date' => date('Y-m-d')))
-                ->get()->result();
+    ->from('sentitems')
+    ->where(array('date' => date('Y-m-d')))
+    ->get()->result();
 
 $this_month_charge = $this->db->select('sum(charge) as charge')
-                ->from('sentitems')
-                ->where('date between "' . $start_date . '" and "' . $end_date . '"')
-                ->get()->result();
+    ->from('sentitems')
+    ->where('date between "' . $start_date . '" and "' . $end_date . '"')
+    ->get()->result();
 
 $this_year_charge = $this->db->select('sum(charge) as charge')
-                ->from('sentitems')
-                ->where('date between "' . $start_date_year . '" and "' . $end_date_year . '"')
-                ->get()->result();
+    ->from('sentitems')
+    ->where('date between "' . $start_date_year . '" and "' . $end_date_year . '"')
+    ->get()->result();
 
 $sentitems_year = $this->db->select('CONCAT(YEAR(date), "-", MONTH(date)) AS monthyear,count(*) as count')
-                ->from('sentitems')
-                ->where('status', 1)
-                ->where('date between "' . $start_date_year . '" and "' . $end_date_year . '"')
-                ->order_by('date', "ASC")
-                ->group_by("MONTH(date), YEAR(date)")
-                ->get()->result();
+    ->from('sentitems')
+    ->where('status', 1)
+    ->where('date between "' . $start_date_year . '" and "' . $end_date_year . '"')
+    ->order_by('date', "ASC")
+    ->group_by("MONTH(date), YEAR(date)")
+    ->get()->result();
 
 $today_charge = $this->db->select('sum(charge) as charge')
-                ->from('sentitems')
-                ->where(array('date' => date('Y-m-d')))
-                ->get()->result();
+    ->from('sentitems')
+    ->where(array('date' => date('Y-m-d')))
+    ->get()->result();
 
 
+$payments = $this->db->select('*,payments.created as datetime,payments.status as payment_status')
+    ->from('payments, users')
+    ->where('payments.sender = users.id ')
+    ->where('payments.created between "' . $start_date_year . '" and "' . $end_date_year . '"')
+    ->order_by('payments.created DESC')
+    ->group_by('payments.id')
+    ->get()->result();
 
 $sent_item_logs = $this->db->select('*,sentitems.status as delivery_status,sum(charge) as totalcharge')
-                ->from('sentitems, routes, users')
-                ->where('sentitems.routeid = routes.id and users.id = sentitems.sender')
-                ->where('sentitems.date between "' . $start_date . '" and "' . $end_date . '"')
-                ->order_by('sentitems.datetime DESC')
-                ->group_by('sentitems.message_id')
-                ->get()->result();
+    ->from('sentitems, routes, users')
+    ->where('sentitems.routeid = routes.id and users.id = sentitems.sender')
+    ->where('sentitems.date between "' . $start_date . '" and "' . $end_date . '"')
+    ->order_by('sentitems.datetime DESC')
+    ->group_by('sentitems.message_id')
+    ->get()->result();
 ?>
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -119,7 +126,7 @@ $sent_item_logs = $this->db->select('*,sentitems.status as delivery_status,sum(c
                                 <strong>
                                     <?= !empty($today_charge) ? number_format($today_charge[0]->charge) : 0 ?>
                                 </strong>
-                                <span class="text-lg text-slim"> UGX</span></span><br>
+                                <span class="text-lg text-slim"> USD</span></span><br>
                             <!-- Big text -->
                         </div> <!-- /.stat-cell -->
 
@@ -143,7 +150,7 @@ $sent_item_logs = $this->db->select('*,sentitems.status as delivery_status,sum(c
                                 <strong>
                                     <?= !empty($this_month_charge) ? number_format($this_month_charge[0]->charge) : 0 ?>
                                 </strong>
-                                <span class="text-lg text-slim"> UGX</span></span><br>
+                                <span class="text-lg text-slim"> USD</span></span><br>
                             <!-- Big text -->
                         </div> <!-- /.stat-cell -->
 
@@ -167,7 +174,7 @@ $sent_item_logs = $this->db->select('*,sentitems.status as delivery_status,sum(c
                                 <strong>
                                     <?= !empty($this_year_charge) ? number_format($this_year_charge[0]->charge) : 0 ?>
                                 </strong>
-                                <span class="text-lg text-slim"> UGX</span></span><br>
+                                <span class="text-lg text-slim"> USD</span></span><br>
                             <!-- Big text -->
                         </div> <!-- /.stat-cell -->
 
@@ -350,7 +357,7 @@ $sent_item_logs = $this->db->select('*,sentitems.status as delivery_status,sum(c
                         Sender
                     </th>
                     <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 10%;">
-                        Total Charge (UGX)
+                        Total Charge (USD)
                     </th>
             </thead>
             <tbody>
@@ -379,5 +386,67 @@ $sent_item_logs = $this->db->select('*,sentitems.status as delivery_status,sum(c
 
     </div>
 </div>
+    <!-- PAYMENT LOGS !-->
+    <script>
+        init.push(function () {
+            $('#jq_payment_log').dataTable();
+            $('#jq_payment_log_wrapper .table-caption').text('This Years Payment Logs');
+            $('#jq_payment_log_wrapper .dataTables_filter input').attr('placeholder', 'Search...');
+        });
+    </script>
+    <div class="table-light">
+        <div role="grid" id="jq_payment_log_wrapper" class="dataTables_wrapper form-inline no-footer">
+
+            <table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered dataTable no-footer" id="jq_payment_log" aria-describedby="jq-datatables-example_info">
+                <thead>
+                <tr role="row">
+                    <th class="sorting_asc" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Rendering engine: activate to sort column ascending" style="width: 2%;">
+                        #
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 20%;">
+                        Created
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 30%">
+                        Payer
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 15%;">
+                        Amount
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 15%;">
+                        Method
+                    </th>
+                    <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 10%;">
+                        Status
+                    </th>
+                </thead>
+                <tbody>
+                <?php
+                $count = 1;
+                foreach ($payments as $payment):
+                    ?>
+                    <tr>
+                        <td><?php echo $count++ ?></td>
+
+                        <td><?php
+                            echo (new Cake\I18n\Time($payment->datetime))->timeAgoInWords();
+                            ?></td>
+                        <td><?php echo $payment->fullname ?></td>
+                        <td><?php echo number_format($payment->messages) ?> UGX</td>
+
+                        <td><?php echo $payment->method ?></td>
+                        <td><?php echo $payment->payment_status ?></td>
+
+
+
+                    </tr>
+                <?php
+                endforeach;
+                ?>
+
+                </tbody>
+            </table>
+
+        </div>
+    </div>
 </div>
 <?php $this->load->view('Layout/backend/footer', []); ?>        

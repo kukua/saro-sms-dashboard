@@ -570,7 +570,7 @@ Email: sales@caltonmobile.com<br>
       <tr style=" border:1px solid #000; text-align:center;">
         <td width="25%" ><strong>Item</strong></td>
         <td width="33%"><strong>Quantity </strong></td>
-        <td width="42%"><strong>Price (UGX)</strong></td>
+        <td width="42%"><strong>Price (USD)</strong></td>
       </tr>
       <tr>
         <td align="center">' . $item . '</td>

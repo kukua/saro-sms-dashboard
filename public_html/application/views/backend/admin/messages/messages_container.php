@@ -43,14 +43,11 @@ $sent_item_logs = $this->db->select('*,routes.name as routename,sentitems.status
                     <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 5%;">
                         Contacts
                     </th>
-                    <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 8%;">
-                        Route
-                    </th>
                     <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 10%;">
                         Sender
                     </th>
                     <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 5%;">
-                        Charge (UGX)
+                        Charge (USD)
                     </th>
                      <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 5%;">
                         Scheduled time
@@ -72,7 +69,6 @@ $sent_item_logs = $this->db->select('*,routes.name as routename,sentitems.status
                             ?></td>
                         <td width="25%"><?php echo anchor('admin_messages/message_details/' . $sent_item->message_id, $sent_item->message); ?></td>
                         <td><?php echo number_format($sent_item->contacts) ?></td>
-                        <td><?php echo $sent_item->routename ?></td>
                         <td><?php echo $sent_item->fullname ?></td>
                         <td><?php echo number_format($sent_item->totalcharge) ?></td>
                             <td><?php echo (new Cake\I18n\Time($sent_item->schedule_datetime))->timeAgoInWords(); ?></td>

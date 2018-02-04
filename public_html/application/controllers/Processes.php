@@ -895,11 +895,11 @@ class Processes extends CI_Controller {
                     $credits = $user_details->credits;
 
                     if ($pesa->category == 'sms' && $pesa->status != "COMPLETED"):
-                        //$email_details = array('type' => 'Account Top up', 'message' => 'Dear ' . $user_details[0]->fullname . '<br>Your account has been credited with UGX ' . number_format($pesa->credit) . ' worthy of messages via pesapal', 'email' => $user_details[0]->email);
+                        //$email_details = array('type' => 'Account Top up', 'message' => 'Dear ' . $user_details[0]->fullname . '<br>Your account has been credited with USD ' . number_format($pesa->credit) . ' worthy of messages via pesapal', 'email' => $user_details[0]->email);
 
                         $this->spectrum->update('users', 'credits', 'credits+' . $pesa->credit, array('id' => $user_details->id));
                     elseif ($pesa->category == 'email' && $pesa->status != "COMPLETED"):
-                        //$email_details = array('type' => 'Account Top up', 'message' => 'Dear ' . $user_details[0]->fullname . '<br>Your account has been credited with UGX ' . number_format($pesa->credit) . ' worthy of emails via pesapal', 'email' => $user_details[0]->email);
+                        //$email_details = array('type' => 'Account Top up', 'message' => 'Dear ' . $user_details[0]->fullname . '<br>Your account has been credited with USD ' . number_format($pesa->credit) . ' worthy of emails via pesapal', 'email' => $user_details[0]->email);
 
                         $this->spectrum->update('users', 'email_credits', 'email_credits+' . $pesa->credit, array('id' => $user_details->id));
                     endif;

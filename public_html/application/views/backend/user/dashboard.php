@@ -130,7 +130,7 @@ $useraccount = $useraccount[0];
                                 <strong>
                                     <?= !empty($today_charge) ? number_format($today_charge[0]->charge) : 0 ?>
                                 </strong>
-                                <span class="text-lg text-slim"> UGX</span></span><br>
+                                <span class="text-lg text-slim"> USD</span></span><br>
                             <!-- Big text -->
                             <span class="text-bg">amount of money spent</span><br>
                         </div> <!-- /.stat-cell -->
@@ -156,7 +156,7 @@ $useraccount = $useraccount[0];
                                 <strong>
                                     <?= !empty($this_month_charge) ? number_format($this_month_charge[0]->charge) : 0 ?>
                                 </strong>
-                                <span class="text-lg text-slim"> UGX</span></span><br>
+                                <span class="text-lg text-slim"> USD</span></span><br>
                             <!-- Big text -->
                             <span class="text-bg">amount of money spent</span><br>
                         </div> <!-- /.stat-cell -->
@@ -212,7 +212,7 @@ $useraccount = $useraccount[0];
                         <!-- Extra large text -->
                         <span class="text-xlg"><strong><?php echo number_format($useraccount->credits) ?></strong></span><br>
                         <!-- Big text -->
-                        <span class="text-bg">SMS Balance (UGX)</span><br>
+                        <span class="text-bg">SMS Balance (USD)</span><br>
                     </div> <!-- /.stat-cell -->
                 </div>
 
@@ -223,7 +223,7 @@ $useraccount = $useraccount[0];
                         <!-- Extra large text -->
                         <span class="text-xlg"><strong><?php echo number_format($useraccount->email_credits) ?></strong></span><br>
                         <!-- Big text -->
-                        <span class="text-bg">Email Balance (UGX)</span><br>
+                        <span class="text-bg">Email Balance (USD)</span><br>
                     </div> <!-- /.stat-cell -->
                 </div>
         </div>
@@ -336,7 +336,7 @@ $useraccount = $useraccount[0];
                         Sender
                     </th>
                     <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 10%;">
-                        Total Charge (UGX)
+                        Total Charge (USD)
                     </th>
             </thead>
             <tbody>
@@ -410,7 +410,7 @@ $useraccount = $useraccount[0];
                             echo (new Cake\I18n\Time($payment->datetime))->timeAgoInWords();
                             ?></td>
                         <td><?php echo $payment->fullname ?></td>
-                        <td><?php echo number_format($payment->messages) ?> UGX</td>
+                        <td><?php echo number_format($payment->messages) ?> USD</td>
 
                         <td><?php echo $payment->method ?></td>
                         <td><?php echo $payment->payment_status ?></td>

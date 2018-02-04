@@ -323,7 +323,7 @@ class Admin_system_settings extends Spectrum_Controller {
         $numbers = $this->db->select('*')->from('users')->where('sms_cost =""')->get()->result();
 
         foreach ($numbers as $number) {
-            $this->db->update('users', array('sms_cost' => 25,
+            $this->db->update('users', array('sms_cost' => 0.07,
                 'email_cost' => 5,
                 'persms_flag' => 1,), array('id' => $number->id));
         }

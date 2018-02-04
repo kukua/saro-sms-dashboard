@@ -67,7 +67,7 @@ $payments = $this->db
                             echo (new Cake\I18n\Time($payment->datetime))->timeAgoInWords();
                             ?></td>
                         <td><?php echo $payment->fullname ?></td>
-                        <td><?php echo number_format($payment->messages) ?> UGX</td>
+                        <td><?php echo number_format($payment->messages) ?> USD</td>
 
                         <td><?php echo $payment->method ?></td>
                         <td><?php echo $payment->payment_status ?></td>

@@ -52,16 +52,7 @@
        
     $rstg = $this->db->select('count(*) as counts')->from('sentitems')->where(array('status' => 4))->get()->result()
     ;
-    
-    echo anchor('admin_messages/governor_messages', '<span class="shortcut-icon">
-						<i class="fa fa-clock-o"></i>
-						<span class="shortcut-alert">
-							' . number_format($rstg[0]->counts) . '
-						</span>
-					</span>
-        <span class="text">Governor Queue</span>', array('class' => 'shortcut-link'));
-    
-    
+
     ?>
 
 

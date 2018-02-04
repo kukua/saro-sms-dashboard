@@ -343,7 +343,7 @@ class User_messages extends Spectrum_Controller {
         $this->db->where(array('message_id' => $id))->delete('sentitems');
         $this->spectrum->update('users', 'credits', 'credits+' . $sent_messages[0]->totalcharge, array('id' => $this->session->userdata('id')));
 
-        $this->data['flash'] = ['message' => 'Message Deleted from Schedule and your account credit back with ' . $sent_messages[0]->totalcharge . ' UGX', 'class' => 'success'];
+        $this->data['flash'] = ['message' => 'Message Deleted from Schedule and your account credit back with ' . $sent_messages[0]->totalcharge . ' USD', 'class' => 'success'];
 
         $this->load_view($this->data);
     }

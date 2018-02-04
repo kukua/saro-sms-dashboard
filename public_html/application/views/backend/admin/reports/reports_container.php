@@ -46,7 +46,7 @@ $sent_item_this_month = $this->db->select('*,routes.name as routename,sentitems.
                         Sender
                     </th>
                     <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 5%;">
-                        Charge (UGX)
+                        Charge (USD)
                     </th>
                     <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 10%;">
                         Action

@@ -81,7 +81,7 @@
 
 
                                 <td><?php
-                                    echo number_format($rows->charge) . ' UGX'
+                                    echo number_format($rows->charge) . ' USD'
                                     ?></td>
                                 <td>
                                     <?php echo $this->spectrum_func->delivery_status($rows->email_status); ?> &nbsp;

@@ -15,7 +15,7 @@
         $phone_numer = $this->data['phone'];
         $first_name = $this->data['firstname'];
         $last_name = $this->data['lastname'];
-        $currency = "UGX";
+        $currency = "USD";
 
         if (!empty($amount) && !empty($description) && !empty($transaction_id) && !empty($email) && !empty($phone_numer) && !empty($first_name) && !empty($last_name)) {
 

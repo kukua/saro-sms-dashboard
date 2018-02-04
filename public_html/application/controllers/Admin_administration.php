@@ -151,11 +151,11 @@ class Admin_administration extends Spectrum_Controller {
 
         $email_details = array();
         if ($_REQUEST['category'] == 'sms') {
-            $email_details = array('type' => 'Account Top up', 'message' => 'Dear ' . $user_details[0]->fullname . '<br>Your account has been credited with UGX ' . number_format($_REQUEST['topupamount']) . ' worthy of messages', 'email' => $user_details[0]->email);
+            $email_details = array('type' => 'Account Top up', 'message' => 'Dear ' . $user_details[0]->fullname . '<br>Your account has been credited with USD ' . number_format($_REQUEST['topupamount']) . ' worthy of messages', 'email' => $user_details[0]->email);
 
             $this->spectrum->update('users', 'credits', 'credits+' . $_REQUEST['topupamount'], array('id' => $this->data['id']));
         } else {
-            $email_details = array('type' => 'Account Top up', 'message' => 'Dear ' . $user_details[0]->fullname . '<br>Your account has been credited with UGX ' . number_format($_REQUEST['topupamount']) . ' worthy of emails', 'email' => $user_details[0]->email);
+            $email_details = array('type' => 'Account Top up', 'message' => 'Dear ' . $user_details[0]->fullname . '<br>Your account has been credited with USD ' . number_format($_REQUEST['topupamount']) . ' worthy of emails', 'email' => $user_details[0]->email);
 
             $this->spectrum->update('users', 'email_credits', 'email_credits+' . $_REQUEST['topupamount'], array('id' => $this->data['id']));
         }

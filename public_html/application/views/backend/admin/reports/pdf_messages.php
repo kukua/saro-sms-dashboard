@@ -124,7 +124,7 @@ $pdf->setTextShadow(array('enabled'=>true, 'depth_w'=>0.2, 'depth_h'=>0.2, 'colo
                     endforeach;
         $html = $html .'</table>';
         
-       $html = $html . '<p><strong>TOTAL COST UGX : '.number_format($sum).'</strong></p>';
+       $html = $html . '<p><strong>TOTAL COST USD : '.number_format($sum).'</strong></p>';
 
 $pdf->writeHTML($html, true, false, false, false, '');
 
