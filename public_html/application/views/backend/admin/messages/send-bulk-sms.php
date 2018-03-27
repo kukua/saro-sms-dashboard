@@ -39,31 +39,29 @@
             <span class="panel-title">Bulk SMS Form</span>
         </div>
         <div class="panel-body">
-            <div class="row">
+            <div class="row optionFormat">
                 <div class="col-sm-6">
                     <div class="form-group no-margin-hr">
-                        <label class="control-label">Sender</label>
-                        <input type="text" required="required"  name="sender" id="sender"  class="form-control">
+                        <label class="control-label">Select Format</label>
+                        <select id="message_format_option" name="message_format_option"  class="form-control" >
+                            <option value="-1" selected="selected">Normal Message</option>
+                            <option value="1">Format one</option>
+                            <option value="2" >Format two</option>
+                            <option value="3" >Format three</option>
+                        </select>
                     </div>
                 </div><!-- col-sm-6 -->
                 <div class="col-sm-6">
                     <div class="form-group no-margin-hr">
-                        <label class="control-label">Route</label>
-                        <select id="route" name= "route"     class="form-control"  >
-                            <option value="All"  >All</option>
-                            <?php
-                            $rst = $this->db->select('*')->from('routes')->get()->result();
-
-                            foreach ($rst as $rows) {
-                                echo '<option value="' . $rows->id . '">' . $rows->name . '</option>';
-                            }
-                            ?>
-
+                        <label class="control-label">Select Language</label>
+                        <select id="message_format_option" name="message_format_option"  class="form-control" >
+                            <option value="en" selected="selected">English (default)</option>
+                            <option value="sw" >Kiswahilli</option>
                         </select>
                     </div>
                 </div><!-- col-sm-6 -->
             </div><!-- row -->
-            <div class="row">
+            <div class="row optionMessage">
                 <div class="col-sm-12">
                     <div class="form-group no-margin-hr">
                         <label class="control-label">Message</label>
@@ -72,7 +70,6 @@
                     </div>
                 </div><!-- col-sm-6 -->
             </div><!-- row -->
-
             <div class="row">
                 <div class="col-sm-6">
                     <div class="form-group no-margin-hr">
@@ -260,9 +257,8 @@ foreach ($this->db->select('*')->from('groups')->where('created_by = "' . $this-
     $("body").delegate("#sender,#msg", "click keyup", function () {
 
         var
-                sender = $('#sender').val(),
                 msg = $("#msg").val(),
-                msg_ = '<b>From : ' + sender + '</b><br/><br/> ' + msg,
+                msg_ = msg,
                 count = msg.length;
 
         if (count > 0) {
@@ -286,17 +282,6 @@ foreach ($this->db->select('*')->from('groups')->where('created_by = "' . $this-
     $("#option").attr("value", "copy");
     $(".option2").hide("fast");
 
-    function triggersms()
-    {
-
-        if (confirm("You are about to send this SMS"))
-        {
-            sendsms();
-
-        } else
-            return false;
-
-    }
 
 
     /*$(".receiver").click(function(){
@@ -304,7 +289,6 @@ foreach ($this->db->select('*')->from('groups')->where('created_by = "' . $this-
      
      
      });*/
-
 
     $("body").delegate("#copypaste_option", "keyup change", function () {
 
@@ -320,6 +304,31 @@ foreach ($this->db->select('*')->from('groups')->where('created_by = "' . $this-
             $(".option2").show(100);
             $("#option").attr("value", "group");
             $("#copypaste").val("");
+        }
+
+    });
+
+    $("body").delegate("#message_format_option", "keyup change load", function () {
+
+        if ($("#message_format_option").val() == '1')
+        {
+            $(".optionMessage").hide(100);
+            $('#msgprev').html("KAMPALA rain 20mm 45% temp 28C wind 3 55kmh hum 70%");
+
+        } else if ($("#message_format_option").val() == '2')
+        {
+            $(".optionMessage").hide(100);
+            $('#msgprev').html("ACRA small chance heavy rain.");
+
+        } else if ($("#message_format_option").val() == '3')
+        {
+            $(".optionMessage").hide(100);
+            $('#msgprev').html("IHANDA, Monday:0.5mm 23.5% Afternoon 28C Night 17C Tuesday:1.5mm 39% 26C 17C Wednesday:3mm 54% 23C 17C Thursday:1mm 31% 27C 17C");
+
+        }  else {
+            $(".optionMessage").show(100);
+
+            $('#msgprev').html($("#msg").val());
         }
 
         //alert($("#copypaste_option").val());

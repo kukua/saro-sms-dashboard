@@ -18,19 +18,6 @@ $failed = !empty($failed) ? $failed[0]->counts : "0";
 $contacts= $this->db->select('count(c.id) as counts')->from('contacts c,groups g,users u')->where('g.id=c.group_id and u.id=g.created_by and u.id='.$id)->get()->result();
 $contacts = !empty($contacts) ? $contacts[0]->counts : "0";
 
-$sent_email = $this->db->select('count(*) as counts')->from('email_outbox')->where(array('sent_by' => $id,'email_status'=>1))->where('schedule_datetime between "' . $start_date . '" and "' . $end_date . '"')->get()->result();
-$sent_email = !empty($sent_email) ? $sent_email[0]->counts : "0";
-
-$pending_email = $this->db->select('count(*) as counts')->from('email_outbox')->where(array('sent_by' => $id,'email_status'=>0))->where('schedule_datetime between "' . $start_date . '" and "' . $end_date . '"')->get()->result();
-$pending_email = !empty($pending_email) ? $pending_email[0]->counts : "0";
-
-$failed_email = $this->db->select('count(*) as counts')->from('email_outbox')->where(array('sent_by' => $id,'email_status'=>2))->where('schedule_datetime between "' . $start_date . '" and "' . $end_date . '"')->get()->result();
-$failed_email = !empty($failed_email) ? $failed_email[0]->counts : "0";
-
-$contacts_email= $this->db->select('count(eb.id) as counts')->from('email_book eb,email_list el,users u')->where('el.id=eb.list_id and u.id=el.user_id and u.id='.$id)->get()->result();
-$contacts_email = !empty($contacts_email) ? $contacts_email[0]->counts : "0";
-
-
 ?>
 <div class="panel panel-default">
     <div class="panel-heading">
@@ -100,18 +87,6 @@ $contacts_email = !empty($contacts_email) ? $contacts_email[0]->counts : "0";
                             <a href="#" class="list-group-item"><strong><?= $failed ?></strong> Failed SMS</a>
                         </div>
                     </div>
-                    
-                    <div class="panel panel-transparent">
-                        <div class="panel-heading">
-                            <span class="panel-title">Email Statistics</span>
-                        </div>
-                        <div class="list-group">
-                            <a href="#" class="list-group-item"><strong><?= $contacts_email ?></strong> Addresses</a>
-                            <a href="#" class="list-group-item"><strong><?= $sent_email ?></strong> Sent Email</a>
-                            <a href="#" class="list-group-item"><strong><?= $pending_email ?></strong> Pending Email</a>
-                            <a href="#" class="list-group-item"><strong><?= $failed_email ?></strong> Failed Email</a>
-                        </div>
-                    </div>
 
 
                     <div class="panel panel-transparent">
@@ -139,23 +114,11 @@ $contacts_email = !empty($contacts_email) ? $contacts_email[0]->counts : "0";
                             <li class="active">
                                 <a href="#profile-tabs-overview" data-toggle="tab">Overview</a>
                             </li>
-                              <li>
-                                <a href="#profile-tabs-email-settings" data-toggle="tab">Email Settings</a>
-                            </li>
-                             <li>
-                                <a href="#profile-tabs-delay-flag" data-toggle="tab">Send Governor</a>
-                            </li>
                             <li>
                                 <a href="#profile-tabs-sms-tariffs" data-toggle="tab">SMS Tariffs</a>
                             </li>
-                             <li>
-                                <a href="#profile-tabs-email-tariffs" data-toggle="tab">Email Tariffs</a>
-                            </li>
                             <li>
                                 <a href="#profile-tabs-sms-timeline" data-toggle="tab">SMS Timeline</a>
-                            </li>
-                            <li>
-                                <a href="#profile-tabs-email-timeline" data-toggle="tab">Email Timeline</a>
                             </li>
                         </ul>
 
@@ -192,91 +155,6 @@ $contacts_email = !empty($contacts_email) ? $contacts_email[0]->counts : "0";
                                                                             <span class="text-bg">Sent SMS</span><br>
                                                                         </div> <!-- /.stat-cell -->
                                                                     </div>
-                                                                    <div class="stat-panel">
-                                                                        <!-- Success background. vertically centered text -->
-                                                                        <div class="stat-cell bg-<?= $this->spectrum_func->credit_color($useraccount->email_credits); ?> valign-middle">
-                                                                            <!-- Stat panel bg icon -->
-                                                                            <i class="fa fa-money bg-icon"></i>
-                                                                            <!-- Extra large text -->
-                                                                            <span class="text-xlg"><strong><?php echo number_format($useraccount->email_credits) ?></strong></span><br>
-                                                                            <!-- Big text -->
-                                                                            <span class="text-bg">Email Balance (USD)</span><br>
-                                                                        </div> <!-- /.stat-cell -->
-                                                                    </div>
-                                                                    <div class="stat-panel">
-                                                                        <!-- Success background. vertically centered text -->
-                                                                        <div class="stat-cell bg-pa-purple valign-middle">
-                                                                            <!-- Stat panel bg icon -->
-                                                                            <i class="fa fa-envelope bg-icon"></i>
-                                                                            <!-- Extra large text -->
-                                                                            <span class="text-xlg"><strong><?php echo number_format($sent_email); ?></strong></span><br>
-                                                                            <!-- Big text -->
-                                                                            <span class="text-bg">Sent Emails</span><br>
-                                                                        </div> <!-- /.stat-cell -->
-                                                                    </div>
-                                                                </div><!-- /.col -->
-                                                                <div class="col-md-6">
-
-                                                                    <div class="panel panel-default">
-                                                                        <div class="panel-heading">
-                                                                            Messaging Routes
-                                                                        </div>
-                                                                        <div class="list-group">
-                                                                            
-                                                                            
-                                                                            <?php
-                                                                            echo form_open('Admin_administration/save_messaging_routes');
-                                                                            ?>
-                                                                            
-                                                                            <input type="hidden" id="id" name="id" value="<?=$id*date('Y')?>"/>
-                                                                            
-                                                                            <?php
-                                                                            $routes_user = array();
-
-                                                                            $route = $this->db->select('*')->from('routes_assigned')->where(array('userid' => $id))->get()->result();
-
-                                                                            foreach ($route as $rows) {
-
-                                                                                array_push($routes_user, $rows->routeid);
-                                                                            }
-
-
-                                                                            $routes = $this->db->select('*')
-                                                                                    ->from('routes')
-                                                                                    ->order_by('name')
-                                                                                    ->get()
-                                                                                    ->result();
-                                                                            ?>
-                                                                            <ul class="list-group">
-                                                                                <?php
-                                                                                foreach ($routes as $rows_routes) {
-                                                                                    ?>
-                                                                                    <li class="list-group-item">
-
-                                                                                        <label class="label-checkbox">
-                                                                                            <?php
-                                                                                            echo ' <input type="checkbox" name="check_' . $rows_routes->id . '"  ' . ((in_array($rows_routes->id, $routes_user)) ? ' checked="checked"' : '') . '> <span class="custom-checkbox"></span> ' . $rows_routes->name . '<br>';
-                                                                                            ?>
-                                                                                        </label>
-                                                                                    </li>
-                                                                                    <?php
-                                                                                }
-                                                                                ?>
-
-                                                                                <li class="list-group-item"><button name="save_messaging_routes" class="btn btn-default" onClick="return confirm('Are you sure of what you are doing?')">
-                                                                                        <i class="fa fa-save fa-lg"></i> Save </button></li>
-
-
-                                                                            </ul>
-
-
-
-                                                                            <?php
-                                                                            echo form_close();
-                                                                            ?>
-
-                                                                        </div><!-- /list-group -->
-                                                                    </div><!-- /panel -->
                                                                 </div><!-- /.col -->
                                                                 
                                                             </div><!-- /.row -->
@@ -444,106 +322,6 @@ $contacts_email = !empty($contacts_email) ? $contacts_email[0]->counts : "0";
                                 </div>
 
                             </div> <!-- / .tab-pane -->
-                                     <div class="widget-article-comments tab-pane panel no-padding no-border" id="profile-tabs-email-settings">                           
-                                <?=form_open('admin_administration/save_email_settings');?>
-                                    <input type="hidden" id="id" name="id" value="<?=$id*date('Y')?>"/>
-                                    
-                                    <div class="form-group amount_row">
-                                        <label for="exampleInputEmail1">Server :</label>
-                                        <input type="text" name="email_server" class="form-control" placeholder="Server" value="<?php echo $useraccount->email_server; ?>" id="email_server"required>
-                                         <label for="exampleInputEmail1">Port :</label>
-                                        <input type="text" name="email_port" class="form-control" placeholder="Port" value="<?php echo $useraccount->email_port; ?>" id="email_port"required>
-                                         <label for="exampleInputEmail1">Username :</label>
-                                        <input type="text" name="email_username" class="form-control" placeholder="Username" value="<?php echo $useraccount->email_username; ?>" id="email_username"required>
-                                         <label for="exampleInputEmail1">Password :</label>
-                                        <input type="text" name="email_password" class="form-control" placeholder="Password" value="<?php echo $useraccount->email_password; ?>" id="email_password"required>
-                                          <label for="exampleInputEmail1">Is Secure</label>
-                                        <select name="email_auth" id="email_auth" class="form-control ">
-                                            <option value="0" <?php echo $useraccount->email_auth == 0 ? "selected='selected'" : "" ?>>False</option>
-                                            <option value="1" <?php echo $useraccount->email_auth == 1 ? "selected='selected'" : "" ?>>True</option>
-
-                                        </select>
-                                          <label for="exampleInputEmail1">Is SMTP</label>
-                                        <select name="email_is_smtp" id="email_is_smtp" class="form-control ">
-                                            <option value="0" <?php echo $useraccount->email_is_smtp == 0 ? "selected='selected'" : "" ?>>False</option>
-                                            <option value="1" <?php echo $useraccount->email_is_smtp == 1 ? "selected='selected'" : "" ?>>True</option>
-
-                                        </select>
-                                        <label for="exampleInputEmail1">Security Option</label>
-                                        <select name="email_secure" id="email_secure" class="form-control ">
-                                            <option value="tls" <?php echo $useraccount->email_secure == 'tls' ? "selected='selected'" : "" ?>>TLS</option>
-                                            <option value="ssl" <?php echo $useraccount->email_secure == 'ssl' ? "selected='selected'" : "" ?>>SSL</option>
-
-                                        </select>
-                                        <div class="form-group panel-footer clearfix">
-
-                                            <button name="save_per_email" class="btn button-orange"><i class="icon-save"></i> Save</button>
-                                    </div><!-- /form-group -->
-                                    </div><!-- /form-group -->
-                                   
-                                <?=form_close()?>
-                            </div>
-                               <div class="widget-article-comments tab-pane panel no-padding no-border" id="profile-tabs-delay-flag">
-                                <?=form_open('Admin_administration/save_governor');?>
-                                <div class="form-group">
-                                        <label for="exampleInputEmail1">Governor Plan</label>
-                                        <select name="governor" id="governor" class="form-control ">
-                                            <option value="1" <?php echo $useraccount->delay_flag == 1 ? "selected='selected'" : "" ?>>Activate Governor</option>
-                                            <option value="0" <?php echo $useraccount->delay_flag == 0 ? "selected='selected'" : "" ?>>No Governor</option>
-
-                                        </select>
-                                    </div><!-- /form-group -->
-                                    <input type="hidden" id="id" name="id" value="<?=$id*date('Y')?>"/>
-                                    
-                                    <div class="form-group amount_row">
-                                        <label id="label_sms" for="">SMS</label>
-                                        <input type="text" name="delay_value" class="form-control" placeholder="SMS every 4 hours" value="<?php echo $useraccount->delay_value ?>" id="delay_value"required>
-                                          <div class="form-group panel-footer clearfix">
-
-                                            <button name="save_governor" class="btn button-orange"><i class="icon-save"></i> Save</button>
-                                    </div><!-- /form-group -->
-                                    </div><!-- /form-group -->
-                                <?=form_close()?>
-                                    
-                                   <script>
-                                        
-                                    var tarrif = $("#governor").val();
-
-                                    if (tarrif == "1")
-                                    {
-
-                                        $("#delay_value").show();
-                                        $("label_sms").show();
-
-                                    } else {
-                                        $("#delay_value").hide();
-                                        $("#label_sms").hide();
-
-                                    }                                   
-                                        
-
-                                    $("body").delegate("#governor", "change", function () {
-
-                                        tarrif = $("#governor").val();
-
-
-
-                                        if (tarrif == "1")
-                                        {
-
-                                            $("#delay_value").show();
-                                            $("#label_sms").show();
-
-                                        } else {
-                                            $("#delay_value").hide();
-                                            $("#label_sms").hide();
-
-                                        }
-
-                                    });
-
-                                </script>
-                            </div>
                             <div class="widget-article-comments tab-pane panel no-padding no-border" id="profile-tabs-sms-tariffs">
                                  <div class="form-group">
                                         <label for="exampleInputEmail1">Tarrif Plan</label>
@@ -639,21 +417,6 @@ $contacts_email = !empty($contacts_email) ? $contacts_email[0]->counts : "0";
 
                                 </script>
                             </div>
-                            <div class="widget-article-comments tab-pane panel no-padding no-border" id="profile-tabs-email-tariffs">
-                                <?=form_open('Admin_administration/save_per_email');?>
-                                    <input type="hidden" id="id" name="id" value="<?=$id*date('Y')?>"/>
-                                    
-                                    <div class="form-group amount_row">
-                                        <label for="exampleInputEmail1">Amount :</label>
-                                        <input type="text" name="cost" class="form-control" placeholder="Price Per Email" value="<?php echo $useraccount->email_cost ?>" id="cost"required>
-                                          <div class="form-group panel-footer clearfix">
-
-                                            <button name="save_per_sms" class="btn button-orange"><i class="icon-save"></i> Save</button>
-                                    </div><!-- /form-group -->
-                                    </div><!-- /form-group -->
-                                   
-                                <?=form_close()?>
-                            </div>
                             <div class="tab-pane fade" id="profile-tabs-sms-timeline">
                                 <?php
                                 $rst = $this->db->select('*,sentitems.status as delivery_status,sum(charge) as totalcharge')
@@ -687,39 +450,7 @@ $contacts_email = !empty($contacts_email) ? $contacts_email[0]->counts : "0";
                                     </div> <!-- / .timeline -->
                                 <?php endforeach; ?>
                             </div> <!-- / .tab-pane -->
-                            <div class="tab-pane fade" id="profile-tabs-email-timeline">
-                                <?php
-                                $rst = $this->db
-                                                ->select('e.*,count(*) as counts,u.fullname, sum(charge) as charge')
-                                                ->from('email_outbox e, users u')
-                                                ->where('e.sent_by = u.id and sent_by=' . $id)
-                                                ->where('e.created_at between "' . $start_date . '" and "' . $end_date . '"')
-                                                ->order_by('e.id DESC')
-                                                ->group_by('e.uuid')
-                                                ->limit(8, 0)
-                                                ->get()->result();
-                                foreach ($rst as $rows):
-                                    ?>
-                                    <div class="timeline">
-                                        <!-- Timeline header -->
-                                        <div class="tl-header now">  
-                                            <?php
-                                            echo (new Cake\I18n\Time($rows->created_at))->timeAgoInWords();
-                                            ?></div>
 
-                                        <div class="tl-entry">
-                                            <div class="tl-time">
-                                                <?= $rows->counts ?>&nbsp;<?= humanize('addresses') ?>
-                                            </div>
-                                            <div class="tl-icon bg-<?= $this->spectrum_func->status_color($rows->email_status) ?>"><i class="fa fa-envelope"></i></div>
-                                            <div class="panel tl-body">                                   
-                                                <?= $rows->email_title ?>
-                                            </div> <!-- / .tl-body -->
-                                        </div> <!-- / .tl-entry -->
-                                    </div> <!-- / .timeline -->
-                                <?php endforeach; ?>
-                            </div> <!-- / .tab-pane -->
-                            
                 </div> <!-- / .tab-content -->
             </div>
 
@@ -761,7 +492,6 @@ $contacts_email = !empty($contacts_email) ? $contacts_email[0]->counts : "0";
                             <label for="exampleInputEmail1">Category :</label>
                             <select  class="form-control input-sm" id="exampleInputEmail1" name="category"  required="required">
                                 <option value="sms">SMS</option>
-                                <option value="email">Email</option>
                             </select>
 
                         </div><!-- /form-group -->
@@ -839,15 +569,9 @@ $contacts_email = !empty($contacts_email) ? $contacts_email[0]->counts : "0";
 </div>
 
 
-<?php
-$rst = $this->db->select('*')->from('users')->where(array('id' => $id))->get()->result();
+    <?php echo form_open('Admin_administration/edit_account_single/' . $useraccount->id * date('Y')) ?>
 
-foreach ($rst as $rows) {
-    ?>
-
-    <?php echo form_open('Admin_administration/edit_account_single/' . $id * date('Y')) ?>
-
-    <div class="modal fade" id="formModal<?php echo $rows->id ?>">
+    <div class="modal fade" id="formModal<?php echo $useraccount->id ?>">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
@@ -857,7 +581,7 @@ foreach ($rst as $rows) {
                 <div class="modal-body">
 
 
-                    <input type="hidden" name="id" value="<?php echo $rows->id ?>">
+                    <input type="hidden" name="id" value="<?php echo $useraccount->id ?>">
 
                     <!---->
 
@@ -868,25 +592,25 @@ foreach ($rst as $rows) {
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Full Name:</label>
-                                <input type="text" class="form-control input-sm" id="exampleInputEmail1" placeholder="Full Name"  value="<?php echo $rows->fullname ?>" name="fullname_edit"  required="required">
+                                <input type="text" class="form-control input-sm" id="exampleInputEmail1" placeholder="Full Name"  value="<?php echo $useraccount->fullname ?>" name="fullname_edit"  required="required">
                             </div><!-- /form-group -->
 
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Mobile :</label>
-                                <input type="text" class="form-control input-sm" id="exampleInputEmail1" placeholder="Mobile" name="mobile_edit"  value="<?php echo $rows->mobile ?>"  required="required">
+                                <input type="text" class="form-control input-sm" id="exampleInputEmail1" placeholder="Mobile" name="mobile_edit"  value="<?php echo $useraccount->mobile ?>"  required="required">
                             </div><!-- /form-group -->
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Email Address :</label>
-                                <input type="email" class="form-control input-sm" id="exampleInputEmail1" placeholder="Email Address" name="email_edit"  value="<?php echo $rows->email ?>"  required="required">
+                                <input type="email" class="form-control input-sm" id="exampleInputEmail1" placeholder="Email Address" name="email_edit"  value="<?php echo $useraccount->email ?>"  required="required">
                             </div><!-- /form-group -->
 
                             <div class="form-group">
                                 <label for="exampleInputEmail1">Account Type:</label>
                                 <select name="accounttype_edit" class="form-control input-sm" id="exampleInputEmail1" >
-                                    <option value="reseller" <?php echo $rows->dept == "reseller" ? 'selected="selected"' : '' ?>>Reseller</option>
-                                    <option value="user" <?php echo $rows->dept == "user" ? 'selected="selected"' : '' ?>>Normal User</option>
+                                    <option value="reseller" <?php echo $useraccount->dept == "reseller" ? 'selected="selected"' : '' ?>>Reseller</option>
+                                    <option value="user" <?php echo $useraccount->dept == "user" ? 'selected="selected"' : '' ?>>Normal User</option>
                                 </select>
                             </div><!-- /form-group -->
 
@@ -904,8 +628,5 @@ foreach ($rst as $rows) {
 
     </div>
     <?php echo form_close(); ?>
-    <?php
-}
-?>
 </div>
 <?php $this->load->view('Layout/backend/footer', []); ?>    

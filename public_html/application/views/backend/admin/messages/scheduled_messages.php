@@ -1,9 +1,9 @@
 <?php
 $this->load->view('Layout/backend/header', []);
 
-$scheduled_item_logs = $this->db->select('*,routes.name as routename,sentitems.status as delivery_status,sum(charge) as totalcharge')
-                ->from('sentitems, routes, users')
-                ->where('sentitems.routeid = routes.id and users.id = sentitems.sender and sentitems.status = 0')
+$scheduled_item_logs = $this->db->select('*,sentitems.status as delivery_status,sum(charge) as totalcharge')
+                ->from('sentitems, users')
+                ->where('users.id = sentitems.sender and sentitems.status = 0')
                 ->where('sentitems.date >= "' . $start_date_year . '" <= "' . $end_date_year . '"')
                 ->order_by('sentitems.id DESC')
                 ->group_by('sentitems.message_id')

@@ -8,13 +8,7 @@
 					</span>
 						   <span class="text">CRM</span>', array('class' => 'shortcut-link'));
      
-    echo anchor('admin_crm/send_emails', '
-					<span class="shortcut-icon">
-						<i class="fa fa-location-arrow"></i>
-					</span>
-						   <span class="text">Send Email</span>', array('class' => 'shortcut-link'));
-    
-    
+
      echo anchor('admin_crm/send_bulk_sms','
 					<span class="shortcut-icon">
 						<i class="fa fa-comments-o"></i>

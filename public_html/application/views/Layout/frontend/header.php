@@ -92,7 +92,7 @@
 										<button type="button" class="btn dropdown-toggle" data-toggle="dropdown"><i class="fa fa-share-alt"></i></button>
 										<ul class="dropdown-menu dropdown-animation">
 											<li class="twitter"><a target="_blank" href="https://twitter.com/spectrumUG"><i class="fa fa-twitter"></i></a></li>
-											<li class="facebook"><a target="_blank" href="https://web.facebook.com/spectrumconnect/"><i class="fa fa-facebook"></i></a></li>
+											<li class="facebook"><a target="_blank" href="https://web.facebook.com/kukua/"><i class="fa fa-facebook"></i></a></li>
                                                                                         <li class="facebook"><a target="_blank" href="https://ug.linkedin.com/in/spectrum-connect-a2167a117"><i class="fa fa-linkedin"></i></a></li>
 										</ul>
 									</div>

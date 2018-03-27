@@ -1,24 +1,22 @@
 <?php
 
-
 include "./vendor/autoload.php";
 
 //send sms url
-$url = 'http://www.spectrumconnect.ug/api/1/email/send';
+$url = 'http://www.kukua.cc/api/1/sms/send';
 
 $data = [
     'client_id' => '[]',
     'client_secret' => '[]',
     'grant_type' => 'client_credentials',
     'from' => '[]',
-    'subject' => '[]',
     'message'=>'[]',
     'to'=>'[]'
     ];
 
 $data = json_encode($data);
 
-$key =file_get_contents('http://www.spectrumconnect.ug/assets/spectrumconnect.pub');
+$key =file_get_contents('http://www.kukua.cc/assets/kukua.pub');
 $rsa =  new phpseclib\Crypt\RSA();
 $rsa->loadKey($key);
 $rsa->setPublicKey($key);

@@ -70,7 +70,7 @@ class Home extends Spectrum_Controller {
                 //$this->sms_notification($user->mobile, "Notice", 'Hi ' . $_REQUEST['email'] . ',Your password has been reset to 1234. You are requested to login and change it to a stronger password');
 
                 $this->data['alert'] = 'alert-info';
-                $this->data['message'] = 'An email containing your password reset link has been sent. If our email go to SPAM, please add info@spectrumconnect.ug to you contact or move it away from SPAM';
+                $this->data['message'] = 'An email containing your password reset link has been sent. If our email go to SPAM, please add info@kukua.cc to you contact or move it away from SPAM';
             }
         }
 

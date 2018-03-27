@@ -21,7 +21,7 @@
                     <div class="col-sm-12">
                         <div class="form-group no-margin-hr">
                             <label class="control-label">From</label>
-                            <input type="text" required="required"  name="from" id="from" value="info@spectrumconnect.ug"  class="form-control">
+                            <input type="text" required="required"  name="from" id="from" value="info@kukua.cc"  class="form-control">
                         </div>
                     </div><!-- col-sm-6 -->
                 </div><!-- row -->

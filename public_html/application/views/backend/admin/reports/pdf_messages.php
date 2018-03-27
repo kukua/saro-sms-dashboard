@@ -30,7 +30,7 @@ endif;
 <?php
 
 
-define ('PDF_HEADER_STRING', "\nspectrumconnect.ug");
+define ('PDF_HEADER_STRING', "\nkukua.cc");
 define ('PDF_HEADER_LOGO', 'logo.png');
 
 // create new PDF document

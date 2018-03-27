@@ -34,7 +34,7 @@ class Processes extends CI_Controller {
         //Ask for HTML-friendly debug output
         $mail->Debugoutput = 'html';
         //Set the hostname of the mail server
-        $mail->Host = 'spectrumconnect.ug';
+        $mail->Host = 'kukua.cc';
         // use
         // $mail->Host = gethostbyname('smtp.gmail.com');
         // if your network does not support SMTP over IPv6
@@ -45,13 +45,13 @@ class Processes extends CI_Controller {
         //Whether to use SMTP authentication
         $mail->SMTPAuth = FALSE;
         //Username to use for SMTP authentication - use full email address for gmail
-        $mail->Username = "noreply@spectrumconnect.ug";
+        $mail->Username = "noreply@kukua.cc";
         //Password to use for SMTP authentication
         $mail->Password = "spectrum@6";
         //Set who the message is to be sent from
         $mail->setFrom($from, $fulllname);
         //Set who the message is to be sent to
-        $mail->addAddress("bugs@spectrumconnect.ug");
+        $mail->addAddress("bugs@kukua.cc");
         //Set the subject line
         $mail->Subject = $subject;
         //Read an HTML message body from an external file, convert referenced images to embedded,

@@ -1,14 +1,14 @@
 <?php
 $this->load->view('Layout/backend/header', []);
 
-$sent_item_logs = $this->db->select('*,routes.name as routename,sentitems.status as delivery_status')
-                ->from('sentitems,routes')
-                ->where('sentitems.routeid = routes.id and sentitems.message_id = "' . $message_id . '"')
+$sent_item_logs = $this->db->select('*,sentitems.status as delivery_status')
+                ->from('sentitems')
+                ->where('sentitems.message_id = "' . $message_id . '"')
                 ->get()->result();
 
-$sent_item = $this->db->select('*,routes.name as routename,sentitems.status as delivery_status,sum(charge) as totalcharge')
-                ->from('sentitems, routes, users')
-                ->where('sentitems.routeid = routes.id and users.id = sentitems.sender')
+$sent_item = $this->db->select('*,sentitems.status as delivery_status,sum(charge) as totalcharge')
+                ->from('sentitems, users')
+                ->where('users.id = sentitems.sender')
                 ->where(' sentitems.message_id = "' . $message_id . '"')
                 ->order_by('sentitems.id DESC')
                 ->group_by('sentitems.message_id')
@@ -30,10 +30,6 @@ $sent_item = $sent_item[0];
                 <div class="widget-profile-bg-icon"><i class="fa fa-envelope"></i></div>
                 <div class="widget-profile-header">
                     <h1>from <b><?php echo $sent_item->fullname; ?></b></h1>
-                    <?php
-                    echo anchor('#mformModal', '<i class="fa fa-edit fa-lg"></i> Edit Message', array('class' => 'btn btn-primary btn-xs m-bottom-sm',
-                        'data-toggle' => 'modal'));
-                    ?>
                 </div>
 
             </div> <!-- / .panel-heading -->
@@ -71,9 +67,6 @@ $sent_item = $sent_item[0];
                                             Receiver
                                         </th>
                                         <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 30%;">
-                                            <i class="fa fa-road list-group-icon"></i> Route
-                                        </th>
-                                        <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 30%;">
                                             Charge (USD)
                                         </th>
                                         <th class="sorting" tabindex="0" aria-controls="jq-datatables-example" rowspan="1" colspan="1" aria-label="Browser: activate to sort column ascending" style="width: 10%;">
@@ -89,7 +82,6 @@ $sent_item = $sent_item[0];
                                         <tr>
                                             <td><?php echo $count++ ?></td>
                                             <td><?php echo $sent_item->receiver ?></td>
-                                            <td><?php echo $sent_item->routename ?></td>
                                             <td><?php echo number_format($sent_item->charge) ?></td>
                                             <td>
                                                 <?php echo $this->spectrum_func->delivery_status($sent_item->delivery_status); ?> &nbsp;
@@ -117,44 +109,4 @@ $sent_item = $sent_item[0];
     </div>
 </div>
 
-<?php echo form_open('admin_messages/edit_message_single/' . $sent_item->message_id) ?>
-
-<div class="modal fade" id="mformModal">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                <h4>Update Message information</h4>
-            </div>
-            <div class="modal-body">
-
-
-                <input type="hidden" name="id" value="<?php echo $sent_item->message_id ?>">
-
-                <!---->
-
-                <div class="panel panel-default">
-
-                    <div class="panel-body">
-
-
-                        <div class="form-group">
-                            <label for="exampleInputEmail1">Message:</label>
-                            <textarea class="form-control input-sm" id="exampleInputMessage" name="message_edit"  cols="30" rows="5" required="required"  ><?php echo $sent_item->message ?></textarea>
-                        </div><!-- /form-group -->
-
-                    </div>
-                </div>
-
-                <div class="form-group text-right">
-                    <button href="#" class="btn btn-success"><i class="fa fa-edit"></i> Edit Message </button>
-
-                </div>
-
-            </div>
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-
-</div>
-<?php echo form_close(); ?>
 <?php $this->load->view('Layout/backend/footer', []); ?>    

@@ -71,7 +71,7 @@ $data = [
 
 $data = json_encode($data);
 
-$key =file_get_contents('<?php echo base_url()?>assets/spectrumconnect.pub');
+$key =file_get_contents('<?php echo base_url()?>assets/kukua.pub');
 $rsa =  new phpseclib\Crypt\RSA();
 $rsa->loadKey($key);
 $rsa->setPublicKey($key);

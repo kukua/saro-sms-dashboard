@@ -76,7 +76,7 @@
         console.log("new", this, template);
         var d = new Date();
         var rnd = Math.random().toString(36).substr(2, 7);
-        var template = 'http://spectrumconnect.ug/assets/backend/mosaico/templates/' + shorttmplname + '/template-' + shorttmplname + '.html';
+        var template = 'http://kukua.cc/assets/backend/mosaico/templates/' + shorttmplname + '/template-' + shorttmplname + '.html';
         viewModel.edits.unshift({created: Date.now(), key: rnd, name: shorttmplname, template: template});
         document.location = 'editor#' + rnd+'#new';
         // { data: 'AAAA-MM-GG', key: 'ABCDE' }
@@ -248,9 +248,9 @@
             <div data-bind="foreach: templates">
                 <div class="template template-xx" style="" data-bind="attr: { class: 'template template-'+name }">
                     <div class="description" style="padding-bottom:5px"><b data-bind="text: name">xx</b>: <span data-bind="text: desc">xx</span></div>
-                    <a href="#" data-bind="click: $root.newEdit.bind(undefined, name), attr: { href: 'http://spectrumconnect.ug/assets/backend/mosaico/templates/'+name+'/template-'+name+'.html' }">
+                    <a href="#" data-bind="click: $root.newEdit.bind(undefined, name), attr: { href: 'http://kukua.cc/assets/backend/mosaico/templates/'+name+'/template-'+name+'.html' }">
 
-                        <img src width="100%" alt="xx" data-bind="attr: { src:'http://spectrumconnect.ug/assets/backend/mosaico/templates/'+name+'/edres/_full.png' }">
+                        <img src width="100%" alt="xx" data-bind="attr: { src:'http://kukua.cc/assets/backend/mosaico/templates/'+name+'/edres/_full.png' }">
                     </a>
                 </div>
             </div>

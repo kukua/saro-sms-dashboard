@@ -247,10 +247,6 @@ error_reporting(E_ALL);
                     <?php echo anchor($this->session->userdata('dept') . '/sms_api', '<i class="menu-icon fa fa-code"></i><span class="mm-text">SMS API </span>') ?>
 
                 </li>
-                <li <?php echo $viewstatus == "email_api" ? 'class="active"' : ""; ?>>
-                    <?php echo anchor($this->session->userdata('dept') . '/email_api', '<i class="menu-icon fa fa-code"></i><span class="mm-text">Email API </span>') ?>
-
-                </li>
 
             </ul> <!-- / .navigation -->
 

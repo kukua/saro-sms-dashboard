@@ -3,7 +3,7 @@
  include "./vendor/autoload.php";
 
     //send sms url
-    $url = 'http://www.spectrumconnect.ug/api/0/sms/send';
+    $url = 'http://www.kukua.cc/api/0/sms/send';
 
     $data = [
         'client_id' => '[]',

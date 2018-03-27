@@ -53,7 +53,8 @@ class Admin_messages extends Spectrum_Controller {
 
             $totalcharge = 0;
             $numbers = array();
-            $sender = $_REQUEST['sender'];
+            $sender = $this->session->userdata('fullname');
+            $format = $_REQUEST['message_format_option'];
             $msg = trim($_REQUEST['msg']);
 
             $msg_length = strlen($msg);
@@ -140,18 +141,11 @@ class Admin_messages extends Spectrum_Controller {
                 $message_id = md5(date('Y-m-d H:i:s') . $sender);
                 for ($i = 0; $i < sizeof($numbers); $i++) {
 
-                    $route = '0';
-
-                    if ($_REQUEST['route'] == 'All') {
-                        $route = $this->spectrum->getrouteSpecial($numbers[$i]);
-                    } else {
-                        $route = $_REQUEST['route'];
-                    }
-
                     $data = array(
                         'datetime' => date('Y-m-d H:i:s'),
                         'date' => date('Y-m-d'),
                         'senderid' => $sender,
+                        'format' => $format,
                         'receiver' => $numbers[$i],
                         'message' => $msg,
                         'schedule_datetime' => $date,
@@ -160,7 +154,6 @@ class Admin_messages extends Spectrum_Controller {
                         'contacts' => sizeof($numbers),
                         'message_id' => $message_id,
                         'type' => 'BULK',
-                        'routeid' => $route,
                         'process' => 1);
 
                     if ($this->db->select('id')->from('sentitems')->where(array('message_id' => $message_id, 'receiver' => $numbers[$i]))->get()->num_rows() == 0) {
@@ -171,17 +164,6 @@ class Admin_messages extends Spectrum_Controller {
                         //IGnore duplicate
                     }
 
-                    /* if (sizeof($numbers) <= 2) {
-
-
-                      if (strlen($_REQUEST['schedule_datetime']) == 0)
-                      if ($route > 0) {
-
-                      $this->db->update('sentitems', array('status' => 1), 'message_id = "' . $message_id . '" and receiver = "' . $numbers[$i] . '"');
-
-                      ($this->spectrum->sendSpecial($sender, $numbers[$i], $msg, $route));
-                      }
-                      } */
                 }
 
 
