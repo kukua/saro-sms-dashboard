@@ -1,6 +1,6 @@
 hhvm:
     image: diegomarangoni/hhvm:fastcgi
-    container_name: hhvm
+    container_name: saro-sms-dashboard-hhvm
     working_dir: /data
     env_file: .env
     volumes:
