@@ -30,6 +30,6 @@ mysql:
         # Fix https://goo.gl/fUTycl
         MYSQL_HOST:
     ports:
-        - "3310:3306"
+        - "3311:3306"
     volumes:
         - ./db_dump/:/docker-entrypoint-initdb.d

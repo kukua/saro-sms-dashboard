@@ -66,6 +66,7 @@ $db['default'] = array(
     'username' => MYSQL_USER,
     'password' => MYSQL_PASS,
     'database' => MYSQL_DB,
+    'port'     => MYSQL_PORT,
     'dbdriver' => 'mysqli',
     'dbprefix' => '',
     'pconnect' => FALSE,
