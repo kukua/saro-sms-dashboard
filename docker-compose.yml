@@ -5,6 +5,8 @@ hhvm:
     env_file: .env
     volumes:
         - ./public_html/:/data
+    links:
+        - mysql
 nginx:
     image: nginx
     container_name: saro-sms-dashboard-nginx
@@ -19,3 +21,15 @@ nginx:
     links:
         - hhvm
     command: /etc/nginx/start.sh
+
+mysql:
+    image: mariadb:10.1
+    container_name: saro-sms-dashboard-mysql
+    env_file: .env
+    environment:
+        # Fix https://goo.gl/fUTycl
+        MYSQL_HOST:
+    ports:
+        - "3310:3306"
+    volumes:
+        - ./db_dump/:/docker-entrypoint-initdb.d
